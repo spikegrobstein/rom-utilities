@@ -25,6 +25,12 @@ if [[ ! -d "$list_dir" ]]; then
   mkdir -p "$list_dir"
 fi
 
+do_find() {
+  local dir=$1
+
+  find "$dir" -maxdepth 1 -mindepth 1 -not -name '.*'
+}
+
 for f in "$roms_dir"/*; do
   if [[ ! -d "$f" ]]; then
     # skip anything that's not a directory
@@ -41,15 +47,15 @@ for f in "$roms_dir"/*; do
   # if no USA directory, then just list everything.
   if [[ -d "${f}/USA" ]]; then
     echo "Writing USA list for $f"
-    find "USA" -maxdepth 1 -mindepth 1 > "$outfile"
+    do_find "USA"  > "$outfile"
 
     if [[ -d "${f}/Multi" ]]; then
       echo "Writing Multi list for $f"
-      find "Multi" -maxdepth 1 -mindepth 1 >> "$outfile"
+      do_find "Multi" >> "$outfile"
     fi
   else
     echo "Writing raw list for $f"
-    find "." -maxdepth 1 -mindepth 1 > "$outfile"
+    do_find "." > "$outfile"
   fi
 
   echo "Wrote $outfile"
