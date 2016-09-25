@@ -12,11 +12,13 @@ require 'highline'
 #   extension: "lnx"
 # }
 def parse_filename(filename)
+  original = filename
   filename = File.basename(filename)
   extension = File.extname(filename)
   components = filename.match(/^(.+?)\s((v\.\d+|v\d+\b|\(|-|\[).+)$/i)
 
   {
+    original: original,
     filename: filename,
     extension: extension,
     basename: components[1],
@@ -61,18 +63,18 @@ File.open(outfile, 'w') do |f|
   results.each { |key, files|
     if files.length == 1
       puts "Automaticly choosing #{key}"
-      f.puts files[0][:filename]
+      f.puts files[0][:original]
       next
     end
 
-    puts "Choice: #{key} - #{files.length}"
+    puts "Choice: #{key} (#{files.length} files)"
     choice = cli.choose do |menu|
       menu.prompt = "Which rom for #{ key }?"
       menu.choice :all
       menu.choice :none
 
       filenames = files.map { |file|
-        file[:filename]
+        file[:original]
       }.sort { |a,b|
         a <=> b
       }
@@ -85,8 +87,8 @@ File.open(outfile, 'w') do |f|
     end
 
     if choice == :all
-      files.each do |file|
-        f.puts file[:filename]
+      filenames.each do |filename|
+        f.puts filename
       end
     elsif choice == :none
       puts "Skipping #{key}"
