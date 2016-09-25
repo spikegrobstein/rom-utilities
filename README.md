@@ -75,5 +75,5 @@ That's about it.
 
 ## Credit
 
-Written by Spike Grobstein <me@spike.cx>
+Written by Spike Grobstein <me@spike.cx>  
 &copy;2016 Spike Grobstein
