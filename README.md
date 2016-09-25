@@ -1,11 +1,33 @@
-# ROM Curator
+# ROM Utilities
 
-This is a collection of scripts which are used to quickly curate a list of gaming ROMs; specifically for cases
+It contains a collection of scripts which are used to quickly curate a list of gaming ROMs; specifically for cases
 when you have multiple versions of a game. This isn't really designed for public consumption; the code isn't
 pretty, there are probably bugs and it's really designed for my own personal preferences with regard to
 sorting and naming and all that.
 
 ## What do?
+
+### Unpack
+
+The `unpack.sh` script automates uncompressing a directory of ROMs. It iterates through all of the files in
+the given directory, determines how to uncompress the file(s) (supporting `zip`, `rar`, and `7z`), and unpacks
+them. It keeps your archive in a directory called `_COMPLETED` inside the console directory. If the archive
+unpacks into a single file, only that file is kept. if It's multiple files, it keeps a directory based on the
+basename of the original archive.
+
+Usage:
+
+    ./unpack.sh <rom-dir>
+
+So, if you have `/storage/ROMs/PSP`, containing a slew of PSP ROMs in compressed format, you would run:
+
+    ./unpack /storage/ROMs/PSP
+
+It will then create `/storage/ROMs/PSP/_COMPLETED` which it stashes each archive after it completes. This way,
+you can pick up where you left off in the event of an error.
+
+It uses a temporary directory called `_UNPACK` in the directory as well, so if that's left behind, you'll have
+to manually clean that up, possibly moving the archive back into the main directory first.
 
 ### Makelists
 
