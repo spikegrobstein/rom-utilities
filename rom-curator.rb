@@ -60,7 +60,7 @@ File.open(outfile, 'w') do |f|
 
   results.each { |key, files|
     if files.length == 1
-      puts "Skipping #{key}"
+      puts "Automaticly choosing #{key}"
       f.puts files[0][:filename]
       next
     end
