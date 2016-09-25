@@ -1,8 +1,19 @@
 #! /usr/bin/env bash
 
+readlink=readlink
+
+if [[ "$(uname)" = 'Darwin' ]]; then
+  readlink=greadlink
+
+  if ! which "$readlink" &> /dev/null; then
+    echo "$readlink not found. Maybe brew install it."
+    exit 1
+  fi
+fi
+
 roms_dir=$1
 list_dir=${2:-'.'}
-list_dir=$( greadlink -f "$list_dir" )
+list_dir=$( $readlink -f "$list_dir" )
 
 if [[ -z "$roms_dir" ]]; then
   echo "Usage: $0 <rom-dir> [ <list-dir> ]"
