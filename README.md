@@ -71,7 +71,21 @@ Output looks like:
     7. Para Lemi! v005 (1997) (PD).lnx
     Which rom for "Para Lemi!"?
 
-That's about it.
+Now you have a curated list of the ROMs for that system.
+
+### Copy
+
+When it's time to copy the ROMs to an emaulator box, there's a script for that `copy.sh`.
+
+    ./copy.sh <list> <source> <target>
+
+So, given that you have a listfile called `lists/lynx.list` and your ROMs all live in `/mnt/nas/ROMs` and
+you want these ROMs to live in `/home/pi/roms/atarilynx`, you'd run this as:
+
+    ./copy lists/lynx.list /mnt/nas/ROMs ~pi/roms/atarilynx
+
+It will iterate over the files in the list, copy them from the source directory and into the target directory,
+verbosely, so you can see what's going on.
 
 ## Credit
 
