@@ -67,17 +67,17 @@ File.open(outfile, 'w') do |f|
       next
     end
 
+    filenames = files.map { |file|
+      file[:original]
+    }.sort { |a,b|
+      a <=> b
+    }
+
     puts "Choice: #{key} (#{files.length} files)"
     choice = cli.choose do |menu|
       menu.prompt = "Which rom for #{ key }?"
       menu.choice :all
       menu.choice :none
-
-      filenames = files.map { |file|
-        file[:original]
-      }.sort { |a,b|
-        a <=> b
-      }
 
       filenames.each { |filename|
         menu.choice filename
